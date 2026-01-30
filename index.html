@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HACKER TOO - Informatique pour tous</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --matrix-green: #00ff41;
+            --dark-bg: #0a0e0f;
+            --darker-bg: #050707;
+            --card-bg: #0f1518;
+            --accent-cyan: #00ffff;
+            --warning-red: #ff3333;
+            --text-dim: #7aff95;
+        }
+
+        body {
+            font-family: 'Courier Prime', monospace;
+            background: var(--dark-bg);
+            color: var(--matrix-green);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Matrix rain background effect */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100%;
+            animation: matrix-fall linear infinite;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            color: var(--matrix-green);
+            text-shadow: 0 0 5px var(--matrix-green);
+        }
+
+        @keyframes matrix-fall {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header with glitch effect */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+            border-bottom: 2px solid var(--matrix-green);
+            box-shadow: 0 2px 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .logo-container {
+            display: inline-block;
+            position: relative;
+            animation: flicker 3s infinite;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            color: var(--matrix-green);
+            text-shadow: 
+                0 0 10px var(--matrix-green),
+                0 0 20px var(--matrix-green),
+                0 0 30px var(--matrix-green);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--accent-cyan);
+            letter-spacing: 3px;
+        }
+
+        .tagline {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            font-style: italic;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            41% { opacity: 0.9; }
+            42% { opacity: 0.8; }
+            43% { opacity: 1; }
+            45% { opacity: 0.9; }
+            46% { opacity: 1; }
+        }
+
+        /* Terminal-style sections */
+        .section {
+            background: var(--card-bg);
+            border: 2px solid var(--matrix-green);
+            border-radius: 8px;
+            margin: 40px 0;
+            padding: 30px;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 65, 0.2),
+                inset 0 0 40px rgba(0, 255, 65, 0.03);
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--matrix-green), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header::before {
+            content: '>';
+            color: var(--matrix-green);
+            font-size: 2.5rem;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Principles grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .principle-card {
+            background: var(--darker-bg);
+            border: 1px solid var(--matrix-green);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .principle-card:hover {
+            transform: translateX(10px);
+            border-left-width: 8px;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+        }
+
+        .principle-card::before {
+            content: '◆';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--matrix-green);
+            opacity: 0.3;
+            font-size: 2rem;
+        }
+
+        .principle-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .principle-desc {
+            color: var(--text-dim);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Features list */
+        .features-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .features-list li {
+            padding: 15px;
+            margin: 10px 0;
+            background: var(--darker-bg);
+            border-left: 3px solid var(--matrix-green);
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 45px;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 15px;
+            color: var(--matrix-green);
+            font-size: 1.5rem;
+            animation: checkPulse 2s infinite;
+        }
+
+        @keyframes checkPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .features-list li:hover {
+            background: rgba(0, 255, 65, 0.1);
+            padding-left: 55px;
+            border-left-width: 5px;
+        }
+
+        /* Economic model */
+        .economic-box {
+            background: linear-gradient(135deg, var(--darker-bg) 0%, rgba(0, 255, 65, 0.1) 100%);
+            border: 2px dashed var(--matrix-green);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .economic-box::before {
+            content: '⚠ IMPORTANT';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--card-bg);
+            padding: 5px 15px;
+            color: var(--warning-red);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .access-note {
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .warning-text {
+            color: var(--warning-red);
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 2px solid var(--matrix-green);
+            margin-top: 60px;
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--text-dim);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+                letter-spacing: 4px;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scanline effect */
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(
+                transparent 50%,
+                rgba(0, 255, 65, 0.03) 50%
+            );
+            background-size: 100% 4px;
+            z-index: 999;
+            animation: scanlineMove 8s linear infinite;
+        }
+
+        @keyframes scanlineMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix background effect -->
+    <div class="matrix-bg" id="matrix"></div>
+    
+    <!-- Scanline effect -->
+    <div class="scanline"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <h1>HACKER TOO</h1>
+                <p class="subtitle">Informatique pour tous</p>
+            </div>
+            <p class="tagline">"L'informatique accessible et économique pour tous"</p>
+        </header>
+
+        <!-- Principes -->
+        <section class="section" style="animation-delay: 0.2s">
+            <h2 class="section-header">Principes Fondamentaux</h2>
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-title">Pb Excel & Autre</div>
+                    <p class="principle-desc">Résolution de problèmes techniques et assistance complète sur les outils bureautiques</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-title">Gaming</div>
+                    <p class="principle-desc">Support et optimisation pour les passionnés de jeux vidéo</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-title">Montage PC</div>
+                    <p class="principle-desc">Assemblage personnalisé et configuration de machines sur mesure</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-title">Mise à jour BIOS</div>
+                    <p class="principle-desc">Mises à jour système et optimisation des performances matérielles</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-title">Forum & Anti-Sèche NSI</div>
+                    <p class="principle-desc">Ressources pédagogiques et communauté d'entraide pour l'informatique</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fonctionnalités -->
+        <section class="section" style="animation-delay: 0.4s">
+            <h2 class="section-header">Fonctionnalités Disponibles</h2>
+            <ul class="features-list">
+                <li>Accès à un jeu PC depuis n'importe quel appareil avec 20ms de latence (Cloud Gaming)</li>
+                <li>Mini jeux gratuits multi-plateformes en ligne</li>
+                <li>Nombre de forums illimités pour la communauté</li>
+                <li>Personnalisation complète (post / autocollant / polices)</li>
+                <li>Contenue éclair de jeu disponible en temps réel</li>
+                <li>Mise en avant de posts et promotion de contenu</li>
+            </ul>
+        </section>
+
+        <!-- Modèle Économique -->
+        <section class="section" style="animation-delay: 0.6s">
+            <h2 class="section-header">Modèle Économique</h2>
+            <div class="economic-box">
+                <p class="access-note">✓ Accès gratuit pour tous les utilisateurs</p>
+                <p><span class="warning-text">✗ Pas de publicités</span> - Votre expérience sans interruption</p>
+                <p style="margin-top: 15px; color: var(--text-dim);">
+                    Financement basé sur le respect des données personnelles et une approche éthique de l'informatique accessible
+                </p>
+            </div>
+        </section>
+
+        <!-- Vision -->
+        <section class="section" style="animation-delay: 0.8s">
+            <h2 class="section-header">Notre Vision</h2>
+            <p style="line-height: 1.8; color: var(--text-dim); font-size: 1.1rem;">
+                Hacker Too aspire à démocratiser l'accès à l'informatique moderne en combinant des services de cloud gaming 
+                haute performance, des outils de collaboration communautaire, et une plateforme d'apprentissage. Notre mission 
+                est de créer un écosystème où chacun peut explorer, apprendre et s'épanouir dans l'univers numérique, 
+                sans barrière technique ou financière.
+            </p>
+        </section>
+
+        <footer>
+            <p class="copyright">Copyright © Hacker Too - Informatique pour tous</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                > SYSTÈME EN LIGNE - TOUTES CONNEXIONS SÉCURISÉES_
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Matrix rain effect
+        function createMatrixRain() {
+            const matrix = document.getElementById('matrix');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const columns = Math.floor(window.innerWidth / 20);
+            
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = (i * 20) + 'px';
+                column.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                column.style.animationDelay = (Math.random() * 2) + 's';
+                
+                let text = '';
+                for (let j = 0; j < 30; j++) {
+                    text += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+                }
+                column.innerHTML = text;
+                matrix.appendChild(column);
+            }
+        }
+
+        // Animate sections on scroll
+        function animateOnScroll() {
+            const sections = document.querySelectorAll('.section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => observer.observe(section));
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createMatrixRain();
+            animateOnScroll();
+        });
+
+        // Update time
+        setInterval(() => {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('fr-FR');
+        }, 1000);
+    </script>
+</body>
+</html>
